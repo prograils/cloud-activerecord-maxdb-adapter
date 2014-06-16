@@ -47,6 +47,14 @@ module ::ArJdbc
       super
     end
 
+    def add_column(table_name, column_name, type, options = {})
+      # The keyword COLUMN allows to use reserved names for columns (ex: date)
+      column = "#{column_name} #{type_to_sql(type, options[:limit], options[:precision], options[:scale])}"
+      add_column_options!(column, options)
+      add_column_sql = "ALTER TABLE #{table_name} ADD (#{column})"
+      execute(add_column_sql)
+    end
+
     def change_column_default(table_name, column_name, default)
       column = column_for(table_name, column_name)
       change_column table_name, column_name, column.sql_type, default: default
