@@ -33,7 +33,7 @@ module ::ArJdbc
     end
 
     def modify_types(tp)
-      tp[:primary_key] = 'SERIAL NOT NULL PRIMARY KEY'
+      tp[:primary_key] = 'INTEGER NOT NULL PRIMARY KEY'
       tp[:string] = { name: 'VARCHAR', limit: 255 }
       tp[:text] = { name: 'VARCHAR', limit: 5000 }
       tp[:integer] = { name: 'INTEGER', limit: nil }
