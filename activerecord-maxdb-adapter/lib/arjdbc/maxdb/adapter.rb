@@ -140,6 +140,23 @@ module ::ArJdbc
       sql.gsub!(/COALESCE/i, 'VALUE')
       super(sql, name, binds)
     end
+
+    # Executes an insert statement in the context of this connection.
+    # @param sql the query string (or AREL object)
+    # @param name logging marker for the executed SQL statement log entry
+    # @param binds the bind parameters
+    # @override available since **AR-3.1**
+    def exec_insert(sql, name, binds, pk = nil, sequence_name = nil)
+      if sql.respond_to?(:to_sql)
+        sql = to_sql(sql, binds); to_sql = true
+      end
+      if prepared_statements?
+        log(sql, name || 'SQL', binds) { @connection.execute_update(sql, binds) }
+      else
+        sql = suble_binds(sql, binds) unless to_sql # deprecated behavior
+        log(sql, name || 'SQL') { @connection.execute_update(sql) }
+      end
+    end
   end
 end
 
