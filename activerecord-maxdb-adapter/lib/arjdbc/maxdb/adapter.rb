@@ -29,7 +29,7 @@ module ::ArJdbc
     # Get the next value from the sequence.
     # See http://maxdb.sap.com/doc/7_8/44/e15c6499fc03fde10000000a1553f6/content.htm
     def next_sequence_value(sequence_name)
-      execute("SELECT #{sequence_name}.NEXTVAL id FROM dual").first['id'].to_i
+      execute("SELECT #{sequence_name}.NEXTVAL id FROM DUMMY").first['id'].to_i
     end
 
     def modify_types(tp)
