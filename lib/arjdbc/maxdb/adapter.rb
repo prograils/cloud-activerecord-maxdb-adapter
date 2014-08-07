@@ -37,7 +37,7 @@ module ::ArJdbc
       tp[:string] = { name: 'VARCHAR', limit: 255 }
       tp[:text] = { name: 'VARCHAR', limit: 5000 }
       tp[:integer] = { name: 'INTEGER', limit: nil }
-      tp[:boolean]     = { name: 'BOOLEAN' }
+      tp[:boolean]     = { name: 'TINYINT', limit: 1 }
       tp
     end
 
