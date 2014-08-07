@@ -67,8 +67,8 @@ module ::ArJdbc
         return value.to_i.to_s
       end
       case value
-      when TrueClass then 'true'
-      when FalseClass then 'false'
+      when TrueClass then '1'
+      when FalseClass then '0'
       else super
       end
     end
