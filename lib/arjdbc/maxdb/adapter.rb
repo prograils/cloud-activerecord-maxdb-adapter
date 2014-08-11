@@ -21,6 +21,10 @@ module ::ArJdbc
       execute("DROP SEQUENCE #{default_sequence_name(name)}")
     end
 
+    def rename_table(name, new_name)
+      execute("RENAME TABLE #{name} TO #{new_name}")
+    end
+
     # This gives the names we assign to sequences.
     def default_sequence_name(table_name, _primary_key = nil)
       "#{table_name}_seq"
