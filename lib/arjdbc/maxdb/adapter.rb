@@ -23,6 +23,11 @@ module ::ArJdbc
 
     def rename_table(name, new_name)
       execute("RENAME TABLE #{name} TO #{new_name}")
+      seq = default_sequence_name(name)
+      new_seq = default_sequence_name(new_name)
+      next_val = next_sequence_value(seq)
+      execute("CREATE SEQUENCE #{new_seq} START WITH #{next_val} INCREMENT BY 1")
+      execute("DROP SEQUENCE #{seq}")
     end
 
     # This gives the names we assign to sequences.
