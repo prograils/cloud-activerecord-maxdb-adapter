@@ -144,12 +144,6 @@ module ::ArJdbc
       @connection.columns_internal(table_name.to_s, name, maxdb_schema)
     end
 
-    # MaxDB does not support COALESCE function/operator. We use VALUE instead.
-    def exec_update(sql, name, binds)
-      sql.gsub!(/COALESCE/i, 'VALUE')
-      super(sql, name, binds)
-    end
-
     # Executes an insert statement in the context of this connection.
     # @param sql the query string (or AREL object)
     # @param name logging marker for the executed SQL statement log entry
