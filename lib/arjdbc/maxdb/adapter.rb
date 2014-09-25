@@ -124,9 +124,9 @@ module ::ArJdbc
 
     def change_column_null(table_name, column_name, null)
       if null
-        execute "ALTER TABLE #{table_name} MODIFY (#{column_name} NULL)"
+        execute "ALTER TABLE #{table_name} ALTER (#{column_name} NULL)"
       else
-        execute "ALTER TABLE #{table_name} MODIFY (#{column_name} NOT NULL)"
+        execute "ALTER TABLE #{table_name} ALTER (#{column_name} NOT NULL)"
       end
     end
 
