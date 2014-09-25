@@ -64,10 +64,27 @@ module ::ArJdbc
       execute(add_column_sql)
     end
 
+    def change_column(table_name, column_name, type, options = {})
+      type_sql = type_to_sql(type,
+                             options[:limit],
+                             options[:precision],
+                             options[:scale])
+      statement = "ALTER TABLE #{table_name} ALTER (#{column_name} #{type_sql})"
+      execute(statement)
+    end
+
     def change_column_default(table_name, column_name, default)
       column = column_for(table_name, column_name)
       change_column table_name, column_name, column.sql_type, default: default
     end
+
+    def remove_column(table_name, *column_names)
+      columns_for_remove(table_name, *column_names).each do |column_name|
+        execute "ALTER TABLE #{table_name} DROP (#{column_name})"
+      end
+    end
+
+    alias :remove_columns :remove_column
 
     # Handle correctly some boolean literals.
     def quote(value, column = nil)
