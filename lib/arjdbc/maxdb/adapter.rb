@@ -78,13 +78,9 @@ module ::ArJdbc
       change_column table_name, column_name, column.sql_type, default: default
     end
 
-    def remove_column(table_name, *column_names)
-      columns_for_remove(table_name, *column_names).each do |column_name|
-        execute "ALTER TABLE #{table_name} DROP (#{column_name})"
-      end
+    def remove_column(table_name, column_name, _type = nil, _options = {})
+      execute "ALTER TABLE #{table_name} DROP (#{column_name})"
     end
-
-    alias :remove_columns :remove_column
 
     # Handle correctly some boolean literals.
     def quote(value, column = nil)
